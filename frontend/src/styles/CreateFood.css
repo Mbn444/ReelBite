@@ -1,0 +1,126 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.create-food-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+    background-color: #121212;
+}
+
+.create-food-page {
+    width: 100%;
+    max-width: 600px;
+    background-color: #1f1f30;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #4a235a;
+    color: white;
+}
+
+.upload-form h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #a569bd;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #b0aeb8;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: #1a1a2e;
+    border: 1px solid #6a11cb;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #a569bd;
+    box-shadow: 0 0 0 2px rgba(165, 105, 189, 0.5);
+}
+
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #1a1a2e;
+    border: 1px dashed #6a11cb;
+    border-radius: 8px;
+    color: #b0aeb8;
+    cursor: pointer;
+}
+
+.form-group input[type="file"]::file-selector-button {
+    background-color: #6a11cb;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.video-preview {
+    margin-top: 20px;
+    text-align: center;
+}
+.video-preview video {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid #4a235a;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #6a11cb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+    background-color: #8a3ffc;
+}
+
+.submit-btn:disabled {
+    background-color: #4a235a;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.form-message {
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.form-message.success {
+    background-color: #28a745;
+    color: white;
+}
+
+.form-message.error {
+    background-color: #dc3545;
+    color: white;
+}

@@ -1,0 +1,106 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeInModal 0.3s ease;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 2.5rem;
+    cursor: pointer;
+    z-index: 1002;
+    padding: 0;
+    line-height: 1;
+}
+
+.modal-content {
+    width: 100%;
+    height: 100%;
+    max-width: 450px;
+    position: relative;
+    background: #000;
+}
+
+.reels-feed-modal {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+}
+.reels-feed-modal::-webkit-scrollbar {
+    display: none;
+}
+
+.reel-modal {
+    height: 100dvh;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    scroll-snap-align: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reel-video-modal {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.reel-overlay-modal,
+.reel-content-modal,
+.reel-description-modal,
+.reel-btn-modal {
+    /* Reusing styles from your reels.css */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    color: #fff;
+    padding: 20px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    box-sizing: border-box;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+.reel-description-modal {
+    position: static;
+    padding: 0;
+    background: none;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+.reel-btn-modal {
+    position: static;
+    padding: 10px 20px;
+    background-color: #6a11cb;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 25px;
+    font-size: 0.9rem;
+}
