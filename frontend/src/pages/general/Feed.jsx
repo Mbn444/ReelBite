@@ -1,109 +1,81 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import '../../styles/reels.css';
+import ReelItem from '../../components/ReelItem'; // <-- 1. Import the new component
 
-const Feed  = () => {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const observer = useRef(null);
+const Feed = () => {
+    const [videos, setVideos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const videoRefs = useRef(new Map());
+    const containerRef = useRef(null);
 
-  const setItemRef = (element) => {
-    if (!element) return;
+    const setVideoRef = (id) => (el) => {
+        if (el) {
+            videoRefs.current.set(id, el);
+        } else {
+            videoRefs.current.delete(id);
+        }
+    };
 
-    if (!observer.current) {
-      observer.current = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const videoElement = entry.target;
-            if (entry.isIntersecting) {
-              videoElement.play().catch(error => console.log("Autoplay prevented:", error));
-            } else {
-              videoElement.pause();
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.play().catch(() => console.log("Autoplay prevented"));
+                    } else {
+                        entry.target.pause();
+                    }
+                });
+            },
+            { threshold: 0.5 }
+        );
+
+        const currentRefs = videoRefs.current;
+        currentRefs.forEach((video) => {
+            if (video) observer.observe(video);
+        });
+
+        return () => {
+            currentRefs.forEach((video) => {
+                if (video) observer.unobserve(video);
+            });
+        };
+    }, [videos]);
+
+    useEffect(() => {
+        const fetchVideos = async () => {
+            try {
+                const response = await axios.get("http://localhost:3000/api/food", { withCredentials: true });
+                setVideos(response.data.foodItems || []);
+            } catch (err) {
+                console.error(err);
+                setError("Failed to fetch feed.");
+            } finally {
+                setLoading(false);
             }
-          });
-        },
-        {
-          threshold: 0.5
-        }
-      );
-    }
-    observer.current.observe(element);
-  };
+        };
+        fetchVideos();
+    }, []);
 
-  useEffect(() => {
-    let isCancelled = false;
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/api/food", { withCredentials: true });
-        if (!isCancelled) {
-          if (response.data && Array.isArray(response.data.foodItems)) {
-            setItems(response.data.foodItems);
-          } else {
-            setError("Data from server was not in the correct format.");
-          }
-        }
-      } catch (err) {
-        if (!isCancelled) {
-          setError("Failed to fetch videos. Please check your connection or try again later.");
-          console.error("API Error:", err);
-        }
-      } finally {
-        if (!isCancelled) {
-          setLoading(false);
-        }
-      }
-    };
-    fetchData();
+    if (loading) return <div>Loading Feed...</div>;
+    if (error) return <div>{error}</div>;
 
-    return () => {
-      isCancelled = true;
-      if (observer.current) {
-        observer.current.disconnect();
-      }
-    };
-  }, []);
-
-  if (loading) {
-    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white' }}>Loading...</div>;
-  }
-
-  if (error) {
-    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'red' }}>{error}</div>;
-  }
-
-  return (
-    <div className="reels-page">
-      <div className="reels-feed" role="list">
-        {items.map(item => (
-          <section key={item._id || item.id} className="reel" role="listitem">
-            <video
-              ref={setItemRef}
-              className="reel-video"
-              src={item.video}
-              muted
-              playsInline
-              loop
-              preload="metadata"
-            />
-            <div className="reel-overlay">
-              <div className="reel-content">
-                <p className="reel-description">
-                  {item.description}
-                </p>
-                {item.foodPartner && (
-                  <Link to={`/food-partner/${item.foodPartner}`} className="reel-btn">
-                    Visit Store
-                  </Link>
-                )}
-              </div>
+    return (
+        <div ref={containerRef} className="reels-page">
+            <div className="reels-feed" role="list">
+                {/* --- 2. THE SIMPLIFIED MAPPING LOGIC --- */}
+                {videos.map(video => (
+                    <ReelItem
+                        key={video._id}
+                        video={video}
+                        setVideoRef={setVideoRef(video._id)}
+                    />
+                ))}
             </div>
-          </section>
-        ))}
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
-export default Feed ;
+export default Feed;
