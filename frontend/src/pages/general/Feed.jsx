@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import '../../styles/reels.css';
-import ReelItem from '../../components/ReelItem'; // <-- 1. Import the new component
+import ReelItem from '../../components/ReelItem';
 
 const Feed = () => {
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const videoRefs = useRef(new Map());
-    const containerRef = useRef(null);
 
     const setVideoRef = (id) => (el) => {
         if (el) {
@@ -23,7 +22,7 @@ const Feed = () => {
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        entry.target.play().catch(() => console.log("Autoplay prevented"));
+                        entry.target.play().catch(e => console.log("Autoplay was prevented", e));
                     } else {
                         entry.target.pause();
                     }
@@ -47,25 +46,32 @@ const Feed = () => {
     useEffect(() => {
         const fetchVideos = async () => {
             try {
+                setLoading(true); // Start loading
                 const response = await axios.get("http://localhost:3000/api/food", { withCredentials: true });
                 setVideos(response.data.foodItems || []);
             } catch (err) {
-                console.error(err);
-                setError("Failed to fetch feed.");
+                console.error("Failed to fetch feed:", err);
+                setError("Failed to fetch the feed. Please try again later.");
             } finally {
-                setLoading(false);
+                setLoading(false); // Stop loading, regardless of success or error
             }
         };
         fetchVideos();
     }, []);
 
-    if (loading) return <div>Loading Feed...</div>;
-    if (error) return <div>{error}</div>;
+    // --- THIS IS THE FIX ---
+    // Provide clear feedback to the user based on the state.
+    if (loading) {
+        return <div style={{ color: 'white', textAlign: 'center', paddingTop: '100px', fontSize: '1.5rem' }}>Loading Reels...</div>;
+    }
+
+    if (error) {
+        return <div style={{ color: 'red', textAlign: 'center', paddingTop: '100px', fontSize: '1.5rem' }}>{error}</div>;
+    }
 
     return (
-        <div ref={containerRef} className="reels-page">
+        <div className="reels-page">
             <div className="reels-feed" role="list">
-                {/* --- 2. THE SIMPLIFIED MAPPING LOGIC --- */}
                 {videos.map(video => (
                     <ReelItem
                         key={video._id}

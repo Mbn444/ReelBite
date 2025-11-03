@@ -10,16 +10,16 @@ const FeedLayout = () => {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
-    try {
-        await logout();
-        toast.success('Logged out successfully.');
-        navigate('/');
-    } catch (error) {
-        // Log the actual error to the console for debugging
-        console.error("Logout failed:", error); 
-        toast.error('Logout failed.');
-    }
-};
+        try {
+            // In a real app with a backend logout endpoint, you would await it here.
+            logout(); 
+            toast.success('Logged out successfully.');
+            navigate('/');
+        } catch (error) {
+            console.error("Logout failed:", error); 
+            toast.error('Logout failed.');
+        }
+    };
 
     return (
         <div className="feed-layout">
@@ -38,7 +38,9 @@ const FeedLayout = () => {
                         </NavLink>
                     )}
                     {authUser && (
-                        <NavLink to={`/food-partner/${authUser._id}`} className="sidebar-link-feed">
+                        // --- THIS IS THE FIX ---
+                        // This link should point to the private "/profile" route
+                        <NavLink to="/profile" className="sidebar-link-feed">
                             <FaUser /><span>Profile</span>
                         </NavLink>
                     )}
@@ -69,7 +71,9 @@ const FeedLayout = () => {
                     </NavLink>
                 )}
                 {authUser && (
-                    <NavLink to={`/food-partner/${authUser._id}`} className="bottom-nav-link">
+                    // --- THIS IS THE FIX ---
+                    // This link should also point to the private "/profile" route
+                    <NavLink to="/profile" className="bottom-nav-link">
                         <FaUser />
                     </NavLink>
                 )}
