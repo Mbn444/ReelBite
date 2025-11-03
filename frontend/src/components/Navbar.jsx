@@ -35,7 +35,7 @@ const Navbar = () => {
                     <FaBars onClick={showSidebar} />
                 </Link>
                 <Link to={logoLink} className="top-bar-logo">
-                    InstaFood
+                    ReelBites
                 </Link>
             </header>
 
