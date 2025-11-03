@@ -3,9 +3,7 @@
   margin: 0 auto;
   position: relative;
   background-color: #000;
-  height: calc(100dvh - 60px);
-  height: calc(100vh - 60px);
-  margin-top: 60px;
+  height: 100%; /* Make sure this is 100% */
 }
 
 .reels-feed {
@@ -42,7 +40,8 @@
   z-index: 2;
   color: #fff;
   padding: 20px;
-  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  /* KEY FIX: Increase padding to make space for the floating nav bar */
+  padding-bottom: 85px; 
   box-sizing: border-box;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
 }
@@ -65,6 +64,10 @@
   text-overflow: ellipsis;
 }
 
+.reel-description.expandable {
+    cursor: pointer;
+}
+
 .reel-btn {
   display: inline-block;
   padding: 10px 20px;
@@ -81,27 +84,11 @@
   background-color: #8a3ffc;
 }
 
-/* --- THIS IS THE FIX --- */
-/* On screens WIDER than 700px, switch to the centered column view */
-@media (min-width: 701px) {
+@media (min-width: 451px) {
   .reels-page {
-    max-width: 650px; /* The width of the centered column */
-    height: calc(100vh - 60px);
+    max-width: 550px;
+    height: 100%;
     border-left: 1px solid #282828;
     border-right: 1px solid #282828;
   }
-}
-
-@media (min-width: 1200px) {
-  .reels-page {
-    max-width: 450px; /* The width of the centered column */
-    height: calc(100vh - 60px);
-    border-left: 1px solid #282828;
-    border-right: 1px solid #282828;
-  }
-}
-
-/* Add this to your reels.css file */
-.reel-description.expandable {
-    cursor: pointer;
 }
