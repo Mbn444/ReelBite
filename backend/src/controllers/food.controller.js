@@ -4,17 +4,25 @@ const { v4: uuid } = require("uuid");
 
 async function createFood(req, res) {
   try {
+    if (!req.file || !req.file.buffer) {
+      return res.status(400).json({ message: "Video file is required." });
+    }
+
     const fileUploadResult = await storageService.uploadFile(
       req.file.buffer,
       uuid(),
       "food-items"
     );
 
+    if (!fileUploadResult || !fileUploadResult.url) {
+        return res.status(500).json({ message: "File upload failed." });
+    }
+
     const foodItem = await foodModel.create({
       name: req.body.name,
       description: req.body.description,
       video: fileUploadResult.url,
-      foodPartner: req.foodPartner._id,
+      foodPartner: req.user.id,
     });
 
     res.status(201).json({
@@ -31,9 +39,8 @@ async function createFood(req, res) {
 
 async function getFoodItems(req, res) {
   try {
-    const foodItems = await foodModel.find({});
+    const foodItems = await foodModel.find({}).sort({ createdAt: -1 });
     res.status(200).json({
-      message: "food items fetched successfully",
       foodItems,
     });
   } catch (error) {
