@@ -1,0 +1,131 @@
+/* --- MOBILE FIRST: Default Styles for Mobile View --- */
+.feed-layout {
+    width: 100%;
+    height: 100vh;
+}
+
+.feed-sidebar {
+    display: none;
+}
+
+.feed-content-area {
+    height: 100%;
+    width: 100%;
+    /* KEY FIX: No longer need padding-bottom as the nav is an overlay */
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    /* KEY FIX: Center the nav and match its width to the reels */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    /* KEY FIX: Match max-width to the reels-page width */
+    max-width: 550px; /* Must match the max-width in reels.css */
+    height: 70px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4), transparent);
+    display: flex;
+    /* KEY FIX: Use gap and center to bring icons closer */
+    justify-content: center; /* Center the group of icons */
+    gap: 10rem; /* Space between icons */
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.bottom-nav-link {
+    color: #b0aeb8;
+    font-size: 1.6rem;
+    transition: color 0.3s ease;
+    /* Clicks are re-enabled for the buttons themselves */
+    pointer-events: auto;
+    padding: 10px; /* Add padding to make icons easier to tap */
+}
+
+.bottom-nav-link.active {
+    color: white;
+}
+
+/* --- DESKTOP STYLES --- */
+@media (min-width: 769px) {
+    .bottom-nav {
+        display: none;
+    }
+
+    .feed-layout {
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .feed-sidebar {
+        display: flex;
+        flex-direction: column;
+        width: 244px;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-color: #000;
+        border-right: 1px solid #282828;
+        padding: 2rem 1rem;
+    }
+
+    .sidebar-logo-feed {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #a569bd;
+        margin: 0 0 2.5rem 0.75rem;
+    }
+
+    .sidebar-nav-feed {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex-grow: 1;
+    }
+
+    .sidebar-link-feed {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: white;
+        text-decoration: none;
+        padding: 0.9rem 0.75rem;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .sidebar-link-feed:hover {
+        background-color: #1a1a1a;
+    }
+    
+    .sidebar-link-feed.active {
+        font-weight: bold;
+    }
+
+    .sidebar-link-feed svg {
+        font-size: 1.5rem;
+    }
+
+    .sidebar-footer-feed {
+        margin-top: auto;
+    }
+
+    .sidebar-link-feed.logout {
+        background: none;
+        border: none;
+        width: 100%;
+        cursor: pointer;
+        font-family: inherit;
+    }
+
+    .feed-content-area {
+        margin-left: 244px;
+        height: 100%;
+        width: calc(100% - 244px);
+        display: flex;
+        justify-content: center;
+    }
+}
