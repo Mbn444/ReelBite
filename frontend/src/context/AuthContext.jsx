@@ -12,9 +12,11 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const checkAuthStatus = async () => {
             try {
-                // This API endpoint checks if a valid cookie exists
+                // We will create this backend endpoint next
                 const response = await axios.get('http://localhost:3000/api/auth/status', { withCredentials: true });
-                setAuthUser(response.data.user);
+                if (response.data && response.data.user) {
+                    setAuthUser(response.data.user);
+                }
             } catch (error) {
                 setAuthUser(null);
             } finally {
@@ -29,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = async () => {
-        // You would also call a backend logout endpoint here
+        // Here you would also call your backend logout endpoint
         setAuthUser(null);
     };
 
@@ -37,9 +39,10 @@ export const AuthProvider = ({ children }) => {
         authUser,
         isLoading,
         login,
-        logout
+        logout,
     };
 
+    // We only render the app once we've checked the auth status
     return (
         <AuthContext.Provider value={value}>
             {!isLoading && children}

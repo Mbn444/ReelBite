@@ -1,41 +1,28 @@
-const foodPartnerModel = require ("../models/foodpartner.model");
-const userModel = require ("../models/user.model")
-const jwt = require ("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
-
-async function authFoodPartnerMiddleware(req, res, next) {
-
-    const token = req.cookies.token;
-
-    if (!token) {
-        return res.status(401).json({
-            message: "Please login first"
-        })
-    }
-
+const authFoodPartnerMiddleware = async (req, res, next) => {
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        const token = req.cookies.token;
 
-        const foodPartner = await foodPartnerModel.findById(decoded.id);
+        if (!token) {
+            return res.status(401).json({ message: "Not authorized, no token provided" });
+        }
 
-        req.foodPartner = foodPartner
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-        next()
+        if (!decodedToken) {
+            return res.status(401).json({ message: "Not authorized, token is invalid" });
+        }
 
-    } catch (err) {
+        req.user = decodedToken;
 
-        return res.status(401).json({
-            message: "Invalid token"
-        })
+        next();
 
+    } catch (error) {
+        return res.status(401).json({ message: "Not authorized, token failed verification" });
     }
-
-}
-
-async function authUserMiddleware(req, res, next) {
-}
-
+};
 
 module.exports = {
     authFoodPartnerMiddleware,
-}
+};

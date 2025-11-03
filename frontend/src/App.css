@@ -1,5 +1,18 @@
 @import './theme.css';
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  font-family: "Inter", "Poppins", sans-serif;
+  color: white;
+  overflow: hidden;
+}
+
 .auth-container {
   display: flex;
   justify-content: center;

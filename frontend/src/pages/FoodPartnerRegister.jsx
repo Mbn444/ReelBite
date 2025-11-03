@@ -32,7 +32,7 @@ const FoodPartnerRegister = () => {
 
             toast.success('Partner account created successfully!', { id: toastId });
             console.log(response.data);
-            navigate("/");
+            navigate("/food-partner/login");
 
         } catch (error) {
             if (error.response) {
@@ -83,8 +83,9 @@ const FoodPartnerRegister = () => {
                     <span>Already have an account? </span>
                     <Link to="/food-partner/login">Login</Link>
                 </div>
-                <div className="bottom-link">
-                    <Link to="/user/register">Register as a User</Link>
+                <div className="extra-link">
+                    <span>Not a business? </span>
+                    <Link to="/user/login">Login as a User</Link>
                 </div>
             </form>
         </div>

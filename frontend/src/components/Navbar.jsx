@@ -1,43 +1,81 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa'; // Run: npm install react-icons
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import toast from 'react-hot-toast';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import '../styles/Navbar.css';
 
 const Navbar = () => {
-    const [click, setClick] = useState(false);
-    const handleClick = () => setClick(!click);
-    const closeMobileMenu = () => setClick(false);
-    
-    // In a real app, you would get this from your AuthContext
-    const isFoodPartner = true;
+    const [sidebar, setSidebar] = useState(false);
+    const { authUser, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const showSidebar = () => setSidebar(!sidebar);
+    const closeMobileMenu = () => setSidebar(false);
+
+    const handleLogout = async () => {
+        try {
+            logout();
+            toast.success('Logged out successfully.');
+            navigate('/'); // On logout, redirect to the public landing page
+            closeMobileMenu();
+        } catch (error) {
+            console.error(error);
+            toast.error('Logout failed. Please try again.');
+        }
+    };
+
+    // Determine where the main logo should link to
+    const logoLink = authUser ? (authUser.isFoodPartner ? '/partner/dashboard' : '/feed') : '/';
 
     return (
-        <nav className="navbar">
-            <div className="nav-container">
-                <Link to="/" className="nav-logo" onClick={closeMobileMenu}>
+        <>
+            <header className="top-bar">
+                <Link to="#" className="menu-bars">
+                    <FaBars onClick={showSidebar} />
+                </Link>
+                <Link to={logoLink} className="top-bar-logo">
                     InstaFood
                 </Link>
+            </header>
 
-                <div className="menu-icon" onClick={handleClick}>
-                    {click ? <FaTimes /> : <FaBars />}
-                </div>
-
-                <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-                    <li className="nav-item">
-                        <NavLink to="/" className="nav-links" onClick={closeMobileMenu} end>
-                            Feed
-                        </NavLink>
+            <nav className={sidebar ? 'sidebar active' : 'sidebar'}>
+                <ul className="sidebar-items" onClick={closeMobileMenu}>
+                    <li className="sidebar-toggle">
+                        <Link to="#" className="menu-bars">
+                            <FaTimes />
+                        </Link>
                     </li>
-                    {isFoodPartner && (
-                        <li className="nav-item">
-                            <NavLink to="/partner/dashboard" className="nav-links" onClick={closeMobileMenu}>
-                                Dashboard
-                            </NavLink>
-                        </li>
+
+                    {authUser ? (
+                        <>
+                            <li className="sidebar-text">
+                                <NavLink to="/feed" end>Feed</NavLink>
+                            </li>
+                            {authUser.isFoodPartner && (
+                                <li className="sidebar-text">
+                                    <NavLink to="/partner/dashboard">Dashboard</NavLink>
+                                </li>
+                            )}
+                            <li className="sidebar-text">
+                                <button onClick={handleLogout} className="sidebar-logout-button">Logout</button>
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <li className="sidebar-text">
+                                <NavLink to="/user/login">User Login</NavLink>
+                            </li>
+                            <li className="sidebar-text">
+                                <NavLink to="/food-partner/login">Partner Login</NavLink>
+                            </li>
+                        </>
                     )}
                 </ul>
-            </div>
-        </nav>
+            </nav>
+            
+            {sidebar && <div className="sidebar-overlay" onClick={showSidebar}></div>}
+        </>
     );
 };
 

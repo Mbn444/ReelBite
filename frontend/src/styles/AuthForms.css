@@ -1,0 +1,113 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+  /* FIX: Added a background gradient to the page */
+  background: linear-gradient(135deg, #1f1f30 0%, #121212 100%);
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 420px;
+  background-color: #1f1f30;
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid #4a235a;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: authFormFadeIn 0.6s ease-in-out;
+}
+
+@keyframes authFormFadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.auth-form h1, .auth-form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #a569bd;
+}
+
+.form-body {
+  /* This is not needed and can be removed for simplicity if you wish */
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 10px;
+  background-color: #1a1a2e;
+  border: 1px solid #6a11cb;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-label {
+  position: absolute;
+  /* FIX: Positions the label INSIDE the input box initially */
+  top: 14px;
+  left: 10px;
+  color: #b0aeb8;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus + .form-label,
+.form-input:not(:placeholder-shown) + .form-label {
+  /* This part is correct and makes the label float up */
+  top: -10px;
+  left: 8px;
+  font-size: 0.8rem;
+  background-color: #1f1f30;
+  padding: 0 4px;
+  color: #a569bd;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #a569bd;
+  box-shadow: 0 0 0 2px rgba(165, 105, 189, 0.5);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(90deg, #6a11cb 0%, #a569bd 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(165, 105, 189, 0.4);
+}
+
+.bottom-link, .extra-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #b0aeb8;
+  font-size: 0.9rem;
+}
+
+.extra-link {
+    margin-top: 10px; /* Smaller margin for the second link */
+}
+
+.bottom-link a, .extra-link a {
+  color: #a569bd;
+  text-decoration: none;
+  font-weight: bold;
+}

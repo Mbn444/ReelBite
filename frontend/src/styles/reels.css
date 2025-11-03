@@ -1,19 +1,11 @@
-body, html {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #121212;
-  height: 100%;
-  width: 100%;
-}
-
 .reels-page {
-  height: 100dvh;
-  height: 100vh;
   width: 100%;
   margin: 0 auto;
   position: relative;
   background-color: #000;
+  height: calc(100dvh - 60px);
+  height: calc(100vh - 60px);
+  margin-top: 60px;
 }
 
 .reels-feed {
@@ -29,13 +21,10 @@ body, html {
 }
 
 .reel {
-  height: 100dvh;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   position: relative;
   scroll-snap-align: start;
-  border-bottom: 1px solid #1a1a1a;
-  box-sizing: border-box;
 }
 
 .reel-video {
@@ -92,10 +81,21 @@ body, html {
   background-color: #8a3ffc;
 }
 
-/* --- Styles for screens WIDER than 450px --- */
-@media (min-width: 451px) {
+/* --- THIS IS THE FIX --- */
+/* On screens WIDER than 700px, switch to the centered column view */
+@media (min-width: 701px) {
   .reels-page {
-    max-width: 450px; /* You can adjust this value if you want the column wider */
+    max-width: 650px; /* The width of the centered column */
+    height: calc(100vh - 60px);
+    border-left: 1px solid #282828;
+    border-right: 1px solid #282828;
+  }
+}
+
+@media (min-width: 1200px) {
+  .reels-page {
+    max-width: 450px; /* The width of the centered column */
+    height: calc(100vh - 60px);
     border-left: 1px solid #282828;
     border-right: 1px solid #282828;
   }

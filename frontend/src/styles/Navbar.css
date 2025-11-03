@@ -1,0 +1,113 @@
+.top-bar {
+    background: #1f1f30;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 998;
+    border-bottom: 1px solid #4a235a;
+}
+
+.menu-bars {
+    font-size: 1.8rem;
+    background: none;
+    color: #fff;
+}
+
+.top-bar-logo {
+    color: #a569bd;
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+.sidebar {
+    background: #1f1f30;
+    width: 280px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    transition: 850ms cubic-bezier(0.6, 0.04, 0.98, 0.335);
+    z-index: 1000;
+    border-right: 1px solid #4a235a;
+}
+
+.sidebar.active {
+    left: 0;
+    transition: 350ms cubic-bezier(0.6, 0.04, 0.98, 0.335);
+}
+
+.sidebar-items {
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-toggle {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    list-style: none;
+}
+
+.sidebar-text {
+    display: flex;
+    align-items: center;
+    padding: 8px 0px 8px 16px;
+    list-style: none;
+    height: 60px;
+}
+
+.sidebar-text a, .sidebar-text button {
+    text-decoration: none;
+    color: #f5f5f5;
+    font-size: 1.1rem;
+    width: 95%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-text a:hover, .sidebar-text button:hover {
+    background-color: #4a235a;
+}
+
+.sidebar-text a.active {
+    background-color: #6a11cb;
+    font-weight: bold;
+}
+
+.sidebar-logout-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    animation: fadeInOverlay 0.4s ease;
+}
+
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

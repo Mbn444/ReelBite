@@ -46,6 +46,7 @@
     border-radius: 8px;
     color: white;
     font-size: 1rem;
+    resize: none;
 }
 
 .form-group input[type="text"]:focus,

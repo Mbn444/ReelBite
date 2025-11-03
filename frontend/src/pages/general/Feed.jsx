@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../../styles/reels.css';
 
-const Home = () => {
+const Feed  = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -106,4 +106,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Feed ;
