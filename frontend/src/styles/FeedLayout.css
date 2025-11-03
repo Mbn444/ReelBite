@@ -11,24 +11,18 @@
 .feed-content-area {
     height: 100%;
     width: 100%;
-    /* KEY FIX: No longer need padding-bottom as the nav is an overlay */
+    overflow-y: auto; /* Make content scrollable on mobile too */
 }
 
 .bottom-nav {
     position: fixed;
     bottom: 0;
-    /* KEY FIX: Center the nav and match its width to the reels */
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
     width: 100%;
-    /* KEY FIX: Match max-width to the reels-page width */
-    max-width: 550px; /* Must match the max-width in reels.css */
     height: 70px;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4), transparent);
     display: flex;
-    /* KEY FIX: Use gap and center to bring icons closer */
-    justify-content: center; /* Center the group of icons */
-    gap: 10rem; /* Space between icons */
+    justify-content: space-around;
     align-items: center;
     z-index: 100;
     pointer-events: none;
@@ -38,9 +32,8 @@
     color: #b0aeb8;
     font-size: 1.6rem;
     transition: color 0.3s ease;
-    /* Clicks are re-enabled for the buttons themselves */
     pointer-events: auto;
-    padding: 10px; /* Add padding to make icons easier to tap */
+    padding: 10px;
 }
 
 .bottom-nav-link.active {
@@ -54,8 +47,9 @@
     }
 
     .feed-layout {
+        display: flex; /* Re-introduce flex for side-by-side layout */
         height: 100vh;
-        overflow: hidden;
+        overflow: hidden; /* Keep this on the main wrapper */
     }
 
     .feed-sidebar {
@@ -63,12 +57,10 @@
         flex-direction: column;
         width: 244px;
         height: 100vh;
-        position: fixed;
-        left: 0;
-        top: 0;
         background-color: #000;
         border-right: 1px solid #282828;
         padding: 2rem 1rem;
+        flex-shrink: 0; /* Prevent sidebar from shrinking */
     }
 
     .sidebar-logo-feed {
@@ -122,10 +114,10 @@
     }
 
     .feed-content-area {
-        margin-left: 244px;
+        /* Remove margin-left */
+        flex-grow: 1; /* Allow the content to fill the remaining space */
         height: 100%;
-        width: calc(100% - 244px);
-        display: flex;
-        justify-content: center;
+        width: 100%;
+        overflow-y: auto; /* KEY FIX: Make ONLY the content area scrollable */
     }
 }
