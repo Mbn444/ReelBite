@@ -1,0 +1,75 @@
+.explore-page {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: exploreFadeIn 0.7s ease-out;
+}
+
+@keyframes exploreFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.explore-page h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #a569bd;
+}
+
+.explore-loading, .explore-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    font-size: 1.5rem;
+}
+
+.explore-error {
+    color: #ff4d4d;
+}
+
+.explore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.explore-item {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid #282828;
+    aspect-ratio: 9 / 16;
+    animation: gridItemFadeIn 0.5s ease-out forwards;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+/* Staggered animation for grid items */
+.explore-item:nth-child(1) { animation-delay: 0.05s; }
+.explore-item:nth-child(2) { animation-delay: 0.1s; }
+.explore-item:nth-child(3) { animation-delay: 0.15s; }
+.explore-item:nth-child(4) { animation-delay: 0.2s; }
+.explore-item:nth-child(5) { animation-delay: 0.25s; }
+.explore-item:nth-child(6) { animation-delay: 0.3s; }
+
+@keyframes gridItemFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.explore-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.explore-item:hover video {
+    transform: scale(1.05);
+}
