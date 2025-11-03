@@ -1,65 +1,83 @@
 .explore-page {
     padding: 2rem;
-    max-width: 1200px;
+    width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
-    animation: exploreFadeIn 0.7s ease-out;
+    animation: explorePageFadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-@keyframes exploreFadeIn {
+@keyframes explorePageFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
-.explore-page h1 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: #a569bd;
+.explore-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
 }
 
-.explore-loading, .explore-error {
+.explore-header h1 {
+    font-size: 2.8rem;
+    color: #a569bd;
+    margin: 0 0 0.5rem 0;
+}
+
+.explore-header p {
+    font-size: 1.1rem;
+    color: #b0aeb8;
+}
+
+.explore-state-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 70vh;
     font-size: 1.5rem;
 }
 
-.explore-error {
+.explore-state-container.error {
     color: #ff4d4d;
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #2c2c4a;
+    border-top: 5px solid #6a11cb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .explore-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .explore-item {
     padding: 0;
     border: none;
-    background: none;
+    background: #1a1a2e;
     cursor: pointer;
     overflow: hidden;
     border-radius: 12px;
-    border: 1px solid #282828;
+    position: relative;
     aspect-ratio: 9 / 16;
-    animation: gridItemFadeIn 0.5s ease-out forwards;
+    animation: gridItemPopIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     opacity: 0;
-    transform: translateY(10px);
+    transform: scale(0.95);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-/* Staggered animation for grid items */
-.explore-item:nth-child(1) { animation-delay: 0.05s; }
-.explore-item:nth-child(2) { animation-delay: 0.1s; }
-.explore-item:nth-child(3) { animation-delay: 0.15s; }
-.explore-item:nth-child(4) { animation-delay: 0.2s; }
-.explore-item:nth-child(5) { animation-delay: 0.25s; }
-.explore-item:nth-child(6) { animation-delay: 0.3s; }
-
-@keyframes gridItemFadeIn {
+@keyframes gridItemPopIn {
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: scale(1);
     }
 }
 
@@ -68,6 +86,21 @@
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
+}
+
+.explore-item-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.explore-item:hover .explore-item-overlay {
+    opacity: 1;
 }
 
 .explore-item:hover video {

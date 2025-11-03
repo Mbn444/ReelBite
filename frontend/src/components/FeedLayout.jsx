@@ -11,8 +11,7 @@ const FeedLayout = () => {
 
     const handleLogout = async () => {
         try {
-            // In a real app with a backend logout endpoint, you would await it here.
-            logout(); 
+            logout();
             toast.success('Logged out successfully.');
             navigate('/');
         } catch (error) {
@@ -39,7 +38,7 @@ const FeedLayout = () => {
                     )}
                     {authUser && (
                         // --- THIS IS THE FIX ---
-                        // This link should point to the private "/profile" route
+                        // The "My Profile" link should always go to the static "/profile" route.
                         <NavLink to="/profile" className="sidebar-link-feed">
                             <FaUser /><span>Profile</span>
                         </NavLink>
@@ -72,7 +71,7 @@ const FeedLayout = () => {
                 )}
                 {authUser && (
                     // --- THIS IS THE FIX ---
-                    // This link should also point to the private "/profile" route
+                    // The "My Profile" link should also go to the static "/profile" route.
                     <NavLink to="/profile" className="bottom-nav-link">
                         <FaUser />
                     </NavLink>
